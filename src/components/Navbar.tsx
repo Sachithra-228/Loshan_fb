@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Home, Users, Video, Store, Gamepad2, MessageCircle, Bell, Grid3x3 } from 'lucide-react';
 import { currentUser } from '../data/mockData';
 import NotificationsDropdown from './NotificationsDropdown';
@@ -9,28 +10,59 @@ interface NavbarProps {
 
 const Navbar = ({ onFriendRequestClick }: NavbarProps) => {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = searchQuery.toLowerCase().trim();
+    // Check if query contains "sahas" or "edirisinghe"
+    if (query.includes('sahas') || query.includes('edirisinghe') || query === 'sahas') {
+      navigate('/profile/sahas-edirisinghe');
+      setSearchQuery('');
+      return;
+    }
+    // If no match, you can add more search logic here
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch(e as any);
+    }
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-gray-200 z-50 flex items-center px-4">
-      <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto flex items-center relative">
         {/* Left: Logo + Search */}
-        <div className="flex items-center gap-2 flex-1">
-          <div className="w-10 h-10 rounded-full bg-fb-blue flex items-center justify-center cursor-pointer">
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <div 
+            onClick={handleLogoClick}
+            className="w-10 h-10 rounded-full bg-fb-blue flex items-center justify-center cursor-pointer flex-shrink-0"
+          >
             <span className="text-white font-bold text-xl">f</span>
           </div>
-          <div className="hidden md:flex items-center bg-fb-gray rounded-full px-4 py-2 gap-2 flex-1 max-w-xs">
-            <Search className="w-5 h-5 text-fb-dark-gray" />
+          <form onSubmit={handleSearch} className="hidden md:flex items-center bg-fb-gray rounded-full px-4 py-2 gap-2 max-w-xs ml-2">
+            <Search className="w-5 h-5 text-fb-dark-gray flex-shrink-0" />
             <input
               type="text"
               placeholder="Search Facebook"
-              className="bg-transparent border-none outline-none flex-1 text-sm"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="bg-transparent border-none outline-none flex-1 text-sm text-black placeholder-gray-500 min-w-0"
               aria-label="Search Facebook"
             />
-          </div>
+          </form>
         </div>
 
         {/* Center: Navigation Icons */}
-        <div className="hidden md:flex items-center gap-1 flex-1 justify-center">
+        <div className="hidden md:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
           <button
             className="px-8 lg:px-12 py-2 hover:bg-fb-gray rounded-lg transition-colors relative"
             aria-label="Home"
@@ -65,7 +97,7 @@ const Navbar = ({ onFriendRequestClick }: NavbarProps) => {
         </div>
 
         {/* Right: Icons + Profile */}
-        <div className="flex items-center gap-2 flex-1 justify-end">
+        <div className="flex items-center gap-2 ml-auto flex-shrink-0">
           <button
             className="w-10 h-10 rounded-full bg-fb-gray hover:bg-gray-300 flex items-center justify-center transition-colors"
             aria-label="Menu"
