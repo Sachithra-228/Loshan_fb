@@ -1,4 +1,4 @@
-import { Story, Post, MenuItem, Shortcut, Sponsored, FriendRequest } from '../types';
+import { Story, Post, MenuItem, Shortcut, Sponsored, FriendRequest, Notification } from '../types';
 
 export const currentUser = {
   id: '1',
@@ -82,16 +82,6 @@ export const friendRequests: FriendRequest[] = [
     mutualFriends: 5,
   },
 ];
-
-export interface Notification {
-  id: string;
-  user?: User;
-  type: 'birthday' | 'group' | 'poke' | 'event' | 'invitation' | 'friend_request';
-  text: string;
-  time: string;
-  icon?: string;
-  isUnread: boolean;
-}
 
 export const notifications: Notification[] = [
   {

@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react';
-import { stories, currentUser } from '../../data/mockData';
+import { stories } from '../../data/mockData';
 
 const StoriesRow = () => {
   return (

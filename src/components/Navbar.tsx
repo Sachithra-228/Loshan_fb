@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Home, Users, Video, Store, Gamepad2, Menu, MessageCircle, Bell, Grid3x3, ChevronDown } from 'lucide-react';
+import { Search, Home, Users, Video, Store, Gamepad2, MessageCircle, Bell, Grid3x3 } from 'lucide-react';
 import { currentUser } from '../data/mockData';
 import NotificationsDropdown from './NotificationsDropdown';
 

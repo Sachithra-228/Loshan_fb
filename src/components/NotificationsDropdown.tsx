@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { X, Users, ThumbsUp, Star, Flag, Cake, UserPlus } from 'lucide-react';
 import { notifications } from '../data/mockData';
 
